@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LA-CIA | IA & No-Code pour les PME</title>
+  <style>
+    :root {
+      --matrix-density: 80;   /* espacement horizontal entre les colonnes */
+      --matrix-speed: 40;     /* vitesse d’animation (plus petit = plus rapide) */
+      --matrix-font: 16;      /* taille des caractères */
+    }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+      color: #d1f7c4;
+      font-family: "Courier New", monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 1;
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    header img {
+      width: clamp(200px, 35vw, 350px);
+      height: auto;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-top: 2rem;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      bottom: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      p  { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <header>
+    <img src="logo.png" alt="Logo LA-CIA" />
+  </header>
+
+  <main>
+    <h1>L’intelligence artificielle au service des artisans et des PME.</h1>
+    <p>LA-CIA accompagne les entreprises dans la découverte et l’intégration de solutions IA et no-code adaptées à leurs besoins.</p>
+  </main>
+
+  <footer>Formulaire de contact en préparation</footer>
+
+  <script>
+    /* --- Fond Matrix ASCII, testé et corrigé --- */
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    const fontSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--matrix-font'));
+    const speed = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--matrix-speed'));
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*";
+    const columns = Math.floor(width / fontSize);
+    const drops = Array(columns).fill(0);
+
+    window.addEventListener("resize", () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+        ctx.fillText(text, x, y);
+
+        if (y > height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, speed);
+  </script>
+</body>
+</html>
