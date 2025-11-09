@@ -1,140 +1,90 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LA-CIA | IA & No-Code pour les PME</title>
-  <style>
-    :root {
-      --matrix-density: 80;   /* espacement horizontal entre les colonnes */
-      --matrix-speed: 40;     /* vitesse d’animation (plus petit = plus rapide) */
-      --matrix-font: 16;      /* taille des caractères */
-    }
-
-    html, body {
-      margin: 0;
-      height: 100%;
-      overflow: hidden;
-      background: black;
-      color: #d1f7c4;
-      font-family: "Courier New", monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-
-    header {
-      position: relative;
-      z-index: 1;
-      margin-top: 4rem;
-      text-align: center;
-    }
-
-    header img {
-      width: clamp(200px, 35vw, 350px);
-      height: auto;
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      margin-top: 2rem;
-      padding: 0 1rem;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      line-height: 1.5;
-    }
-
-    footer {
-      position: relative;
-      z-index: 1;
-      bottom: 2rem;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 1.4rem; }
-      p  { font-size: 1rem; }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LA-CIA | L’Alliance – Conseil en Intelligence Artificielle</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+  <!-- Canvas du fond Matrix -->
   <canvas id="matrix"></canvas>
 
   <header>
-    <img src="logo.png" alt="Logo LA-CIA" />
+    <img src="logo.png" alt="Logo LA-CIA" class="logo">
+    <h1>L’Alliance – Conseil en Intelligence Artificielle</h1>
   </header>
 
   <main>
-    <h1>L’intelligence artificielle au service des artisans et des PME.</h1>
-    <p>LA-CIA accompagne les entreprises dans la découverte et l’intégration de solutions IA et no-code adaptées à leurs besoins.</p>
+    <section id="presentation">
+      <p class="intro">
+        <strong>LA-CIA</strong> aide les entreprises à comprendre, tester et intégrer l’intelligence artificielle dans leurs activités, sans complexité technique.
+      </p>
+
+      <p>
+        Nous croyons que l’IA doit être un outil accessible, au service de l’humain et de la performance.
+        Grâce à une approche <strong>no-code</strong> et des solutions simples à déployer, nous permettons aux organisations de tirer parti de l’IA sans développeurs ni infrastructures lourdes.
+      </p>
+
+      <h2>Nos domaines d’intervention</h2>
+      <ul>
+        <li><strong>Conseil stratégique IA :</strong> analyse de vos besoins, identification des cas d’usage et définition d’une feuille de route claire.</li>
+        <li><strong>Automatisation no-code :</strong> mise en place de flux intelligents pour réduire les tâches répétitives et fluidifier vos processus internes.</li>
+        <li><strong>Prototypage IA :</strong> création rapide de solutions personnalisées : assistants internes, analyse de données, génération de contenu, etc.</li>
+        <li><strong>Formation et accompagnement :</strong> sensibilisation et montée en compétence de vos équipes pour une adoption maîtrisée de l’IA.</li>
+      </ul>
+
+      <h2>Notre vision</h2>
+      <p>
+        L’intelligence artificielle ne remplace pas l’humain : elle l’augmente.  
+        Chez <strong>LA-CIA</strong>, nous construisons une véritable alliance entre votre savoir-faire et la puissance de l’IA,
+        pour que la technologie devienne un levier durable de performance, d’innovation et de créativité.
+      </p>
+    </section>
   </main>
 
-  <footer>Formulaire de contact en préparation</footer>
+  <footer>
+    <p>© 2025 LA-CIA – Tous droits réservés.</p>
+  </footer>
 
   <script>
-    /* --- Fond Matrix ASCII, testé et corrigé --- */
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
+    // Effet Matrix allégé et en caractères latins
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
 
-    const fontSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--matrix-font'));
-    const speed = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--matrix-speed'));
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*";
-    const columns = Math.floor(width / fontSize);
-    const drops = Array(columns).fill(0);
-
-    window.addEventListener("resize", () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    });
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>|+-•◦○●';
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
 
     function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-      ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = "#0F0";
-      ctx.font = fontSize + "px monospace";
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00FF41';
+      ctx.font = fontSize + 'px monospace';
 
       for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
-        ctx.fillText(text, x, y);
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if (y > height && Math.random() > 0.975) drops[i] = 0;
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
         drops[i]++;
       }
     }
 
-    setInterval(draw, speed);
+    setInterval(draw, 40);
   </script>
+
 </body>
 </html>
