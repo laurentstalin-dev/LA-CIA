@@ -43,6 +43,50 @@
         pour que la technologie devienne un levier durable de performance, d’innovation et de créativité.
       </p>
     </section>
+
+    <!-- === Formulaire de contact === -->
+    <section id="contact">
+      <h2>Demande de mise en relation</h2>
+
+      <form id="contactForm" action="https://formspree.io/f/mvgdpnea" method="POST">
+        
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le nom doit contenir uniquement des lettres.">
+
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le prénom doit contenir uniquement des lettres.">
+
+        <label for="societe">Société :</label>
+        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100" title="Nom de société obligatoire.">
+
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required 
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+               title="Adresse e-mail invalide. Exemple : nom@entreprise.fr">
+
+        <label for="telephone">Téléphone :</label>
+        <input type="tel" id="telephone" name="telephone" required 
+               pattern="^(\+33|0)[1-9](\s?\d{2}){4}$" 
+               title="Numéro français valide attendu. Exemple : 0612345678 ou +33612345678">
+
+        <fieldset class="besoins">
+          <legend>Votre besoin :</legend>
+          <label><input type="checkbox" name="besoin" value="Conseil IA"> Conseil IA</label>
+          <label><input type="checkbox" name="besoin" value="Automatisation"> Automatisation</label>
+          <label><input type="checkbox" name="besoin" value="Formation"> Formation</label>
+          <label><input type="checkbox" name="besoin" value="Autre"> Autre</label>
+        </fieldset>
+
+        <label for="message">Message :</label>
+        <textarea id="message" name="message" required minlength="10" maxlength="1000"
+          placeholder="Décrivez brièvement votre demande (pas de code)."></textarea>
+
+        <label for="verif">Combien font 3 + 4 ?</label>
+        <input type="text" id="verif" name="verif" required pattern="7" title="Merci d’indiquer la bonne réponse.">
+
+        <button type="submit" class="cta">Envoyer la demande</button>
+      </form>
+    </section>
   </main>
 
   <footer>
@@ -50,7 +94,7 @@
   </footer>
 
   <script>
-    // Effet Matrix allégé et en caractères latins
+    // --- Fond Matrix ---
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -71,21 +115,42 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#00FF41';
       ctx.font = fontSize + 'px monospace';
-
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
       }
     }
-
     setInterval(draw, 40);
+
+    // --- Validation et envoi sécurisé ---
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Protection : empêche le code HTML
+      const message = document.getElementById('message').value;
+      if (/[<>]/.test(message)) {
+        alert("Merci de ne pas inclure de code ou de balises HTML dans le message.");
+        return;
+      }
+
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        alert("Votre message a bien été envoyé, merci !");
+        form.reset();
+      } else {
+        alert("Une erreur est survenue. Merci de réessayer plus tard.");
+      }
+    });
   </script>
 
 </body>
 </html>
-
