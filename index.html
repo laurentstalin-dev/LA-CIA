@@ -7,15 +7,12 @@
 
   <!-- Feuille de style principale -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- Intégration du script Google reCAPTCHA v3 -->
-  <!-- Clé publique enregistrée dans ton compte Google -->
-  <script src="https://www.google.com/recaptcha/api.js?render=6LeA-AcsAAAAALU4HWc2wOUEGszDab6bTramc05C"></script>
 </head>
 
 <body>
+
   <!-- ===============================
-       EFFET DE FOND MATRIX
+       FOND ANIMÉ TYPE MATRIX
        =============================== -->
   <canvas id="matrix"></canvas>
 
@@ -28,7 +25,7 @@
   </header>
 
   <!-- ===============================
-       SECTION PRINCIPALE
+       SECTION DE PRÉSENTATION
        =============================== -->
   <main>
     <section id="presentation">
@@ -45,7 +42,7 @@
 
       <h2>Nos domaines d’intervention</h2>
       <ul>
-        <li><strong>Conseil stratégique IA :</strong> analyse de vos besoins et feuille de route claire.</li>
+        <li><strong>Conseil stratégique IA :</strong> analyse de vos besoins et définition d’une feuille de route claire.</li>
         <li><strong>Automatisation no-code :</strong> création de flux intelligents pour gagner en efficacité.</li>
         <li><strong>Prototypage IA :</strong> développement rapide d’assistants, d’outils et de modèles IA.</li>
         <li><strong>Formation et accompagnement :</strong> montée en compétences de vos équipes.</li>
@@ -66,29 +63,35 @@
       <h2>Demande de mise en relation</h2>
 
       <!-- Formulaire connecté à Formspree -->
+      <!-- Honeypot (_gotcha) pour bloquer les robots -->
       <form id="contactForm" action="https://formspree.io/f/mvgdpnea" method="POST">
+        <input type="text" name="_gotcha" style="display:none">
 
         <!-- Nom -->
         <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le nom doit contenir uniquement des lettres.">
+        <input type="text" id="nom" name="nom" required
+               pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Uniquement des lettres.">
 
         <!-- Prénom -->
         <label for="prenom">Prénom :</label>
-        <input type="text" id="prenom" name="prenom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le prénom doit contenir uniquement des lettres.">
+        <input type="text" id="prenom" name="prenom" required
+               pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Uniquement des lettres.">
 
         <!-- Société -->
         <label for="societe">Société :</label>
-        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100" title="Nom de société obligatoire.">
+        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100"
+               title="Nom de société obligatoire.">
 
         <!-- Email -->
         <label for="email">Email :</label>
-        <input type="email" id="email" name="email" required title="Adresse e-mail invalide. Exemple : nom@entreprise.fr">
+        <input type="email" id="email" name="email" required
+               title="Adresse e-mail valide (exemple : nom@entreprise.fr)">
 
         <!-- Téléphone -->
         <label for="telephone">Téléphone :</label>
         <input type="tel" id="telephone" name="telephone" required
-          pattern="^(\+33|0)[1-9](\s?\d{2}){4}$"
-          title="Numéro français valide attendu. Exemple : 0612345678 ou +33612345678">
+               pattern="^(\+33|0)[1-9](\s?\d{2}){4}$"
+               title="Format français attendu : 0612345678 ou +33612345678">
 
         <!-- Cases à cocher -->
         <fieldset class="besoins">
@@ -102,7 +105,7 @@
         <!-- Message -->
         <label for="message">Message :</label>
         <textarea id="message" name="message" required minlength="10" maxlength="1000"
-          placeholder="Décrivez brièvement votre demande (pas de code)."></textarea>
+                  placeholder="Décrivez brièvement votre demande (pas de code HTML)"></textarea>
 
         <!-- Bouton -->
         <button type="submit" class="cta">Envoyer la demande</button>
@@ -124,6 +127,7 @@
     /* === 1. Effet Matrix === */
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
+
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -135,6 +139,7 @@
     const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
+
     function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -143,55 +148,47 @@
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
         drops[i]++;
       }
     }
     setInterval(draw, 40);
 
-    /* === 2. Envoi du formulaire avec reCAPTCHA v3 === */
+    /* === 2. Envoi du formulaire via Formspree (sans captcha) === */
     const form = document.getElementById('contactForm');
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault(); // Empêche le rechargement de la page
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
 
-      // Vérification simple pour éviter le code HTML dans le message
+      // Vérifie que le message ne contient pas de balises HTML
       const message = document.getElementById('message').value;
       if (/[<>]/.test(message)) {
-        alert("Merci de ne pas inclure de code HTML dans votre message.");
+        alert("⚠️ Merci de ne pas inclure de code HTML dans votre message.");
         return;
       }
 
-      // Étape reCAPTCHA : génération d’un token côté Google
-      grecaptcha.ready(function () {
-        grecaptcha.execute('6LeA-AcsAAAAALU4HWc2wOUEGszDab6bTramc05C', { action: 'submit' }).then(function (token) {
+      // Envoi des données
+      const formData = new FormData(form);
 
-          // On ajoute le token reCAPTCHA au formulaire
-          const formData = new FormData(form);
-          formData.append('g-recaptcha-response', token);
-
-          // Envoi via Fetch (AJAX)
-          fetch(form.action, {
-            method: form.method,
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-          })
-          .then(response => {
-            if (response.ok) {
-              alert('✅ Votre message a bien été envoyé, merci !');
-              form.reset();
-            } else {
-              response.json().then(data => {
-                console.error('Erreur Formspree :', data);
-                alert('⚠️ Erreur de validation reCAPTCHA. Merci de réessayer.');
-              });
-            }
-          })
-          .catch(() => {
-            alert('❌ Impossible de contacter le serveur. Vérifiez votre connexion.');
-          });
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: { 'Accept': 'application/json' }
         });
-      });
+
+        if (response.ok) {
+          alert('✅ Votre message a bien été envoyé, merci !');
+          form.reset();
+        } else {
+          alert('❌ Erreur lors de l’envoi. Veuillez réessayer.');
+        }
+      } catch (error) {
+        console.error('Erreur :', error);
+        alert('⚠️ Impossible de contacter le serveur Formspree.');
+      }
     });
   </script>
 </body>
