@@ -1,3 +1,8 @@
+/* ===============================
+   STYLE GLOBAL LA-CIA (Matrix)
+   =============================== */
+
+/* ----- Base du site ----- */
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
@@ -7,43 +12,50 @@ body {
   background: black;
 }
 
+/* ----- Canvas du fond Matrix ----- */
 #matrix {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: -1; /* placé derrière le contenu */
 }
 
+/* ----- En-tête du site ----- */
 header {
   padding: 30px 20px;
 }
 
+/* Logo de l’entreprise */
 .logo {
-  width: 220px;
+  width: 220px; /* taille du logo */
   margin: 20px 0 10px;
 }
 
+/* Titre principal */
 h1 {
   font-size: 2em;
   margin-bottom: 20px;
 }
 
+/* ----- Section principale ----- */
 main {
   padding: 20px;
   max-width: 900px;
   margin: 0 auto 50px;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.55); /* fond semi-transparent */
   border-radius: 12px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px); /* effet de flou doux */
 }
 
+/* Phrase d’introduction */
 .intro {
   font-size: 1.2em;
   margin-bottom: 25px;
 }
 
+/* Liste des domaines d’intervention */
 ul {
   text-align: left;
   max-width: 700px;
@@ -59,13 +71,18 @@ ul li {
   border-radius: 8px;
 }
 
+/* ----- Pied de page ----- */
 footer {
   padding: 25px 0;
   font-size: 0.9em;
   color: #aaa;
 }
 
-/* === Formulaire de contact === */
+/* ===============================
+   FORMULAIRE DE CONTACT
+   =============================== */
+
+/* Conteneur du formulaire */
 #contact {
   margin-top: 60px;
   max-width: 500px;
@@ -74,15 +91,17 @@ footer {
   border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 0 12px rgba(0, 255, 65, 0.2);
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.2); /* halo Matrix */
 }
 
+/* Titre de la section contact */
 #contact h2 {
   text-align: center;
-  color: #00ff41;
+  color: #00ff41; /* vert Matrix */
   margin-bottom: 20px;
 }
 
+/* Labels (noms des champs) */
 #contact label {
   display: block;
   margin-top: 10px;
@@ -90,6 +109,7 @@ footer {
   font-weight: bold;
 }
 
+/* Champs texte et zone de message */
 #contact input,
 #contact textarea {
   width: 100%;
@@ -99,38 +119,84 @@ footer {
   border: none;
   background: rgba(255, 255, 255, 0.1);
   color: white;
+  transition: all 0.3s;
 }
 
+/* Effet lumineux vert au focus */
 #contact input:focus,
 #contact textarea:focus {
   outline: 1px solid #00ff41;
   background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 6px rgba(0, 255, 65, 0.3);
 }
 
+/* Zone de texte (message) */
 #contact textarea {
   min-height: 100px;
-  resize: vertical;
+  resize: vertical; /* redimensionnement vertical uniquement */
 }
 
-/* Alignement horizontal propre des cases à cocher */
+/* ===============================
+   CASES À COCHER (BESOINS)
+   =============================== */
+
+/* Conteneur global des cases */
 .besoins {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 20px;
+  gap: 12px 18px; /* espacement entre les cases */
   justify-content: flex-start;
   margin-top: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 12px;
 }
 
+/* Style des étiquettes (chaque case + texte) */
 .besoins label {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: normal;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 6px 10px;
-  border-radius: 6px;
-  transition: background 0.3s;
+  gap: 8px;
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 6px rgba(0, 255, 65, 0.08);
 }
+
+/* Effet lumineux au survol */
+.besoins label:hover {
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
+/* Apparence des cases */
+.besoins input[type="checkbox"] {
+  accent-color: #00ff41; /* couleur verte Matrix */
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Version mobile (cases en colonne) */
+@media (max-width: 600px) {
+  .besoins {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .besoins label {
+    width: 100%;
+  }
+}
+
+/* ===============================
+   BOUTON D’ENVOI
+   =============================== */
+
+/* Bouton principal */
 #contact button {
   width: 100%;
   margin-top: 20px;
@@ -141,10 +207,15 @@ footer {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
+/* Effet au survol */
 #contact button:hover {
   background-color: #0096c7;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
 }
 
+/* ===============================
+   FIN DU STYLE
+   =============================== */
