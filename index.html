@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LA-CIA | L’Alliance – Conseil en Intelligence Artificielle</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-
-  <!-- Canvas du fond Matrix -->
+  <!-- Fond Matrix -->
   <canvas id="matrix"></canvas>
 
   <header>
-    <img src="logo.png" alt="Logo LA-CIA" class="logo">
+    <img src="logo.png" alt="Logo LA-CIA" class="logo" />
     <h1>L’Alliance – Conseil en Intelligence Artificielle</h1>
   </header>
 
@@ -49,40 +48,36 @@
       <h2>Demande de mise en relation</h2>
 
       <form id="contactForm" action="https://formspree.io/f/mvgdpnea" method="POST">
-        
         <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le nom doit contenir uniquement des lettres.">
+        <input type="text" id="nom" name="nom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le nom doit contenir uniquement des lettres." />
 
         <label for="prenom">Prénom :</label>
-        <input type="text" id="prenom" name="prenom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le prénom doit contenir uniquement des lettres.">
+        <input type="text" id="prenom" name="prenom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le prénom doit contenir uniquement des lettres." />
 
         <label for="societe">Société :</label>
-        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100" title="Nom de société obligatoire.">
+        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100" title="Nom de société obligatoire." />
 
         <label for="email">Email :</label>
-        <input type="email" id="email" name="email" required 
-               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-               title="Adresse e-mail invalide. Exemple : nom@entreprise.fr">
+        <input type="email" id="email" name="email" required
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          title="Adresse e-mail invalide. Exemple : nom@entreprise.fr" />
 
         <label for="telephone">Téléphone :</label>
-        <input type="tel" id="telephone" name="telephone" required 
-               pattern="^(\+33|0)[1-9](\s?\d{2}){4}$" 
-               title="Numéro français valide attendu. Exemple : 0612345678 ou +33612345678">
+        <input type="tel" id="telephone" name="telephone" required
+          pattern="^(\+33|0)[1-9](\s?\d{2}){4}$"
+          title="Numéro français valide attendu. Exemple : 0612345678 ou +33612345678" />
 
         <fieldset class="besoins">
           <legend>Votre besoin :</legend>
-          <label><input type="checkbox" name="besoin" value="Conseil IA"> Conseil IA</label>
-          <label><input type="checkbox" name="besoin" value="Automatisation"> Automatisation</label>
-          <label><input type="checkbox" name="besoin" value="Formation"> Formation</label>
-          <label><input type="checkbox" name="besoin" value="Autre"> Autre</label>
+          <label><input type="checkbox" name="besoin" value="Conseil IA" /> Conseil IA</label>
+          <label><input type="checkbox" name="besoin" value="Automatisation" /> Automatisation</label>
+          <label><input type="checkbox" name="besoin" value="Formation" /> Formation</label>
+          <label><input type="checkbox" name="besoin" value="Autre" /> Autre</label>
         </fieldset>
 
         <label for="message">Message :</label>
         <textarea id="message" name="message" required minlength="10" maxlength="1000"
           placeholder="Décrivez brièvement votre demande (pas de code)."></textarea>
-
-        <label for="verif">Combien font 3 + 4 ?</label>
-        <input type="text" id="verif" name="verif" required pattern="7" title="Merci d’indiquer la bonne réponse.">
 
         <button type="submit" class="cta">Envoyer la demande</button>
       </form>
@@ -93,28 +88,30 @@
     <p>© 2025 LA-CIA – Tous droits réservés.</p>
   </footer>
 
+  <!-- Scripts -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script>
     // --- Fond Matrix ---
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>|+-•◦○●';
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>|+-•◦○●";
     const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
 
     function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#00FF41';
-      ctx.font = fontSize + 'px monospace';
+      ctx.fillStyle = "#00FF41";
+      ctx.font = fontSize + "px monospace";
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -124,15 +121,14 @@
     }
     setInterval(draw, 40);
 
-    // --- Validation et envoi sécurisé ---
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', async (e) => {
+    // --- Envoi du formulaire ---
+    const form = document.getElementById("contactForm");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Protection : empêche le code HTML
-      const message = document.getElementById('message').value;
+      const message = document.getElementById("message").value;
       if (/[<>]/.test(message)) {
-        alert("Merci de ne pas inclure de code ou de balises HTML dans le message.");
+        alert("Merci de ne pas inclure de code HTML.");
         return;
       }
 
@@ -140,7 +136,7 @@
       const response = await fetch(form.action, {
         method: form.method,
         body: formData,
-        headers: { 'Accept': 'application/json' }
+        headers: { Accept: "application/json" },
       });
 
       if (response.ok) {
@@ -150,7 +146,19 @@
         alert("Une erreur est survenue. Merci de réessayer plus tard.");
       }
     });
-  </script>
 
+    // --- reCAPTCHA invisible ---
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.querySelector("#contactForm button");
+      btn.classList.add("g-recaptcha");
+      btn.setAttribute("data-sitekey", "6LeA-AcsAAAAALU4HWc2wOUEGszDab6bTramc05C");
+      btn.setAttribute("data-callback", "onSubmit");
+      btn.setAttribute("data-action", "submit");
+    });
+
+    function onSubmit(token) {
+      document.getElementById("contactForm").submit();
+    }
+  </script>
 </body>
 </html>
