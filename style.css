@@ -112,12 +112,25 @@ footer {
   resize: vertical;
 }
 
-.besoins label {
-  display: block;
-  margin-top: 5px;
-  font-weight: normal;
+/* Alignement horizontal propre des cases à cocher */
+.besoins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  justify-content: flex-start;
+  margin-top: 10px;
 }
 
+.besoins label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: normal;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
 #contact button {
   width: 100%;
   margin-top: 20px;
@@ -134,3 +147,4 @@ footer {
 #contact button:hover {
   background-color: #0096c7;
 }
+
