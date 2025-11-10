@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LA-CIA | L’Alliance – Conseil en Intelligence Artificielle</title>
-
-  <!-- Lien vers la feuille de style -->
   <link rel="stylesheet" href="style.css">
+  <!-- Script Google reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LeA-AcsAAAAALU4HWc2wOUEGszDab6bTramc05C"></script>
 </head>
 
 <body>
   <!-- ===============================
-       FOND MATRIX (effet animé)
+       FOND MATRIX
        =============================== -->
   <canvas id="matrix"></canvas>
 
@@ -27,30 +27,28 @@
        CONTENU PRINCIPAL
        =============================== -->
   <main>
-    <!-- --- Présentation --- -->
     <section id="presentation">
       <p class="intro">
         <strong>LA-CIA</strong> aide les entreprises à comprendre, tester et intégrer l’intelligence artificielle dans leurs activités, sans complexité technique.
       </p>
 
       <p>
-        L’IA doit être un outil accessible, au service de l’humain et de la performance.
-        Grâce à une approche <strong>no-code</strong> et des solutions simples à déployer, nous permettons aux organisations de tirer parti de l’IA sans développeurs ni infrastructures lourdes.
+        Grâce à une approche <strong>no-code</strong> et des solutions simples à déployer,
+        nous permettons aux organisations de tirer parti de l’IA sans développeurs ni infrastructures lourdes.
       </p>
 
       <h2>Nos domaines d’intervention</h2>
       <ul>
-        <li><strong>Conseil stratégique IA :</strong> analyse de vos besoins, identification des cas d’usage et définition d’une feuille de route claire.</li>
-        <li><strong>Automatisation no-code :</strong> mise en place de flux intelligents pour réduire les tâches répétitives et fluidifier vos processus internes.</li>
-        <li><strong>Prototypage IA :</strong> création rapide de solutions personnalisées : assistants internes, analyse de données, génération de contenu, etc.</li>
-        <li><strong>Formation et accompagnement :</strong> sensibilisation et montée en compétence de vos équipes pour une adoption maîtrisée de l’IA.</li>
+        <li><strong>Conseil stratégique IA :</strong> analyse de vos besoins, définition d’une feuille de route claire.</li>
+        <li><strong>Automatisation no-code :</strong> mise en place de flux intelligents pour réduire les tâches répétitives.</li>
+        <li><strong>Prototypage IA :</strong> création rapide d’assistants, analyse de données, génération de contenu, etc.</li>
+        <li><strong>Formation et accompagnement :</strong> montée en compétence de vos équipes.</li>
       </ul>
 
       <h2>Notre vision</h2>
       <p>
-        L’intelligence artificielle ne remplace pas l’humain : elle l’augmente.  
-        Chez <strong>LA-CIA</strong>, nous construisons une véritable alliance entre votre savoir-faire et la puissance de l’IA,
-        pour que la technologie devienne un levier durable de performance, d’innovation et de créativité.
+        L’intelligence artificielle ne remplace pas l’humain — elle l’augmente.  
+        Chez <strong>LA-CIA</strong>, nous construisons une alliance entre votre savoir-faire et la puissance de l’IA.
       </p>
     </section>
 
@@ -60,13 +58,7 @@
     <section id="contact">
       <h2>Demande de mise en relation</h2>
 
-      <!-- 
-        Le formulaire utilise Formspree pour envoyer les messages.
-        - action : URL de ton formulaire Formspree
-        - method : POST obligatoire
-      -->
       <form id="contactForm" action="https://formspree.io/f/mvgdpnea" method="POST">
-
         <!-- Nom -->
         <label for="nom">Nom :</label>
         <input type="text" id="nom" name="nom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le nom doit contenir uniquement des lettres.">
@@ -77,26 +69,19 @@
 
         <!-- Société -->
         <label for="societe">Société :</label>
-        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100" title="Nom de société obligatoire.">
+        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100">
 
         <!-- Email -->
         <label for="email">Email :</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          title="Adresse e-mail invalide. Exemple : nom@entreprise.fr"
-        >
-
+        <input type="email" id="email" name="email" required title="Adresse e-mail invalide. Exemple : nom@entreprise.fr">
 
         <!-- Téléphone -->
         <label for="telephone">Téléphone :</label>
-        <input type="tel" id="telephone" name="telephone" required 
-          pattern="^(\+33|0)[1-9](\s?\d{2}){4}$" 
+        <input type="tel" id="telephone" name="telephone" required
+          pattern="^(\+33|0)[1-9](\s?\d{2}){4}$"
           title="Numéro français valide attendu. Exemple : 0612345678 ou +33612345678">
 
-        <!-- Cases à cocher (besoins) -->
+        <!-- Cases à cocher -->
         <fieldset class="besoins">
           <legend>Votre besoin :</legend>
           <label><input type="checkbox" name="besoin" value="Conseil IA"> Conseil IA</label>
@@ -110,7 +95,7 @@
         <textarea id="message" name="message" required minlength="10" maxlength="1000"
           placeholder="Décrivez brièvement votre demande (pas de code)."></textarea>
 
-        <!-- Bouton d’envoi -->
+        <!-- Bouton -->
         <button type="submit" class="cta">Envoyer la demande</button>
       </form>
     </section>
@@ -124,13 +109,12 @@
   </footer>
 
   <!-- ===============================
-       SCRIPTS : FOND MATRIX + FORMULAIRE
+       SCRIPTS JS
        =============================== -->
   <script>
     /* === 1. Effet Matrix === */
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
-
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -142,7 +126,6 @@
     const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
-
     function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -157,34 +140,41 @@
     }
     setInterval(draw, 40);
 
-    /* === 2. Envoi du formulaire via Formspree === */
+    /* === 2. Envoi du formulaire avec validation reCAPTCHA === */
     const form = document.getElementById('contactForm');
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Vérifie que le message ne contient pas de balises HTML
+      // Validation simple
       const message = document.getElementById('message').value;
       if (/[<>]/.test(message)) {
         alert("Merci de ne pas inclure de code HTML.");
         return;
       }
 
-      // Envoi vers Formspree
-      const formData = new FormData(form);
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
+      // Exécution du reCAPTCHA v3 avant envoi
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6LeA-AcsAAAAALU4HWc2wOUEGszDab6bTramc05C', { action: 'submit' }).then(function (token) {
+          const formData = new FormData(form);
+          formData.append('g-recaptcha-response', token); // indispensable pour Formspree
 
-      if (response.ok) {
-        alert('✅ Votre message a bien été envoyé, merci !');
-        form.reset();
-      } else {
-        alert('⚠️ Une erreur est survenue. Merci de réessayer plus tard.');
-      }
+          fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          }).then(response => {
+            if (response.ok) {
+              alert('✅ Votre message a bien été envoyé, merci !');
+              form.reset();
+            } else {
+              alert('⚠️ Erreur d’envoi. Merci de réessayer plus tard.');
+            }
+          }).catch(() => {
+            alert('❌ Impossible de contacter le serveur. Vérifiez votre connexion.');
+          });
+        });
+      });
     });
   </script>
 </body>
 </html>
-
