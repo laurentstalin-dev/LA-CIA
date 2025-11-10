@@ -9,7 +9,7 @@
 
 <body>
 
-  <!-- Fond Matrix -->
+  <!-- Canvas du fond Matrix -->
   <canvas id="matrix"></canvas>
 
   <header>
@@ -30,47 +30,46 @@
 
       <h2>Nos domaines d’intervention</h2>
       <ul>
-        <li><strong>Conseil stratégique IA :</strong> analyse de vos besoins et définition d’une feuille de route claire.</li>
-        <li><strong>Automatisation no-code :</strong> création de flux intelligents pour gagner en efficacité.</li>
-        <li><strong>Prototypage IA :</strong> développement rapide d’assistants, d’outils et de modèles IA.</li>
-        <li><strong>Formation et accompagnement :</strong> montée en compétences de vos équipes.</li>
+        <li><strong>Conseil stratégique IA :</strong> analyse de vos besoins, identification des cas d’usage et définition d’une feuille de route claire.</li>
+        <li><strong>Automatisation no-code :</strong> mise en place de flux intelligents pour réduire les tâches répétitives et fluidifier vos processus internes.</li>
+        <li><strong>Prototypage IA :</strong> création rapide de solutions personnalisées : assistants internes, analyse de données, génération de contenu, etc.</li>
+        <li><strong>Formation et accompagnement :</strong> sensibilisation et montée en compétence de vos équipes pour une adoption maîtrisée de l’IA.</li>
       </ul>
 
       <h2>Notre vision</h2>
       <p>
-        L’intelligence artificielle ne remplace pas l’humain — elle l’augmente.  
-        Chez <strong>LA-CIA</strong>, nous construisons une alliance entre votre savoir-faire et la puissance de l’IA
-        pour stimuler innovation et performance durable.
+        L’intelligence artificielle ne remplace pas l’humain : elle l’augmente.  
+        Chez <strong>LA-CIA</strong>, nous construisons une véritable alliance entre votre savoir-faire et la puissance de l’IA,
+        pour que la technologie devienne un levier durable de performance, d’innovation et de créativité.
       </p>
     </section>
 
-    <!-- Formulaire de contact -->
+    <!-- === Formulaire de contact === -->
     <section id="contact">
       <h2>Demande de mise en relation</h2>
 
-      <form id="contactForm">
-        <!-- Nom -->
+      <form id="contactForm" action="https://formspree.io/f/mvgdpnea" method="POST">
+        
         <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" required>
+        <input type="text" id="nom" name="nom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le nom doit contenir uniquement des lettres.">
 
-        <!-- Prénom -->
         <label for="prenom">Prénom :</label>
-        <input type="text" id="prenom" name="prenom" required>
+        <input type="text" id="prenom" name="prenom" required pattern="[A-Za-zÀ-ÿ\s\-]{2,}" title="Le prénom doit contenir uniquement des lettres.">
 
-        <!-- Société -->
         <label for="societe">Société :</label>
-        <input type="text" id="societe" name="societe" required>
+        <input type="text" id="societe" name="societe" required minlength="2" maxlength="100" title="Nom de société obligatoire.">
 
-        <!-- Email -->
         <label for="email">Email :</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" required 
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+               title="Adresse e-mail invalide. Exemple : nom@entreprise.fr">
 
-        <!-- Téléphone -->
         <label for="telephone">Téléphone :</label>
-        <input type="tel" id="telephone" name="telephone" required>
+        <input type="tel" id="telephone" name="telephone" required 
+               pattern="^(\+33|0)[1-9](\s?\d{2}){4}$" 
+               title="Numéro français valide attendu. Exemple : 0612345678 ou +33612345678">
 
-        <!-- Cases à cocher -->
-        <fieldset>
+        <fieldset class="besoins">
           <legend>Votre besoin :</legend>
           <label><input type="checkbox" name="besoin" value="Conseil IA"> Conseil IA</label>
           <label><input type="checkbox" name="besoin" value="Automatisation"> Automatisation</label>
@@ -78,11 +77,14 @@
           <label><input type="checkbox" name="besoin" value="Autre"> Autre</label>
         </fieldset>
 
-        <!-- Message -->
         <label for="message">Message :</label>
-        <textarea id="message" name="message" required placeholder="Décrivez votre demande..."></textarea>
+        <textarea id="message" name="message" required minlength="10" maxlength="1000"
+          placeholder="Décrivez brièvement votre demande (pas de code)."></textarea>
 
-        <button type="submit">Envoyer</button>
+        <label for="verif">Combien font 3 + 4 ?</label>
+        <input type="text" id="verif" name="verif" required pattern="7" title="Merci d’indiquer la bonne réponse.">
+
+        <button type="submit" class="cta">Envoyer la demande</button>
       </form>
     </section>
   </main>
@@ -92,7 +94,7 @@
   </footer>
 
   <script>
-    // Effet Matrix (simplifié et fluide)
+    // --- Fond Matrix ---
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -103,7 +105,7 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>|+-•◦○●';
     const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
@@ -111,7 +113,7 @@
     function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#00b050'; // Vert doux
+      ctx.fillStyle = '#00FF41';
       ctx.font = fontSize + 'px monospace';
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
@@ -122,12 +124,31 @@
     }
     setInterval(draw, 40);
 
-    // Simulation d’envoi local (test avant mise en production)
+    // --- Validation et envoi sécurisé ---
     const form = document.getElementById('contactForm');
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      alert("Test local : le formulaire fonctionne correctement ✅");
-      form.reset();
+
+      // Protection : empêche le code HTML
+      const message = document.getElementById('message').value;
+      if (/[<>]/.test(message)) {
+        alert("Merci de ne pas inclure de code ou de balises HTML dans le message.");
+        return;
+      }
+
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        alert("Votre message a bien été envoyé, merci !");
+        form.reset();
+      } else {
+        alert("Une erreur est survenue. Merci de réessayer plus tard.");
+      }
     });
   </script>
 
