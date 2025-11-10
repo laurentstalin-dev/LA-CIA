@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LA-CIA | L’Alliance – Conseil en Intelligence Artificielle</title>
 
-  <!-- Feuille de style principale -->
+  <!-- Lien vers la feuille de style -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <!-- ===============================
-       FOND MATRIX (effet visuel animé)
+       FOND MATRIX (effet animé)
        =============================== -->
   <canvas id="matrix"></canvas>
 
   <!-- ===============================
-       EN-TÊTE DU SITE
+       EN-TÊTE
        =============================== -->
   <header>
     <img src="logo.png" alt="Logo LA-CIA" class="logo">
@@ -27,7 +27,6 @@
        CONTENU PRINCIPAL
        =============================== -->
   <main>
-
     <!-- --- Présentation --- -->
     <section id="presentation">
       <p class="intro">
@@ -62,9 +61,9 @@
       <h2>Demande de mise en relation</h2>
 
       <!-- 
-        Formspree gère la réception des messages.
-        action : URL du formulaire (Formspree)
-        method : POST obligatoire
+        Le formulaire utilise Formspree pour envoyer les messages.
+        - action : URL de ton formulaire Formspree
+        - method : POST obligatoire
       -->
       <form id="contactForm" action="https://formspree.io/f/mvgdpnea" method="POST">
 
@@ -92,7 +91,7 @@
           pattern="^(\+33|0)[1-9](\s?\d{2}){4}$" 
           title="Numéro français valide attendu. Exemple : 0612345678 ou +33612345678">
 
-        <!-- Cases à cocher -->
+        <!-- Cases à cocher (besoins) -->
         <fieldset class="besoins">
           <legend>Votre besoin :</legend>
           <label><input type="checkbox" name="besoin" value="Conseil IA"> Conseil IA</label>
@@ -120,14 +119,10 @@
   </footer>
 
   <!-- ===============================
-       SCRIPTS (MATRIX + FORMULAIRE + reCAPTCHA)
+       SCRIPTS : FOND MATRIX + FORMULAIRE
        =============================== -->
-
-  <!-- Script reCAPTCHA Google -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
   <script>
-    /* === 1. EFFET MATRIX === */
+    /* === 1. Effet Matrix === */
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -157,51 +152,33 @@
     }
     setInterval(draw, 40);
 
-    /* === 2. GESTION DU FORMULAIRE (Formspree) === */
+    /* === 2. Envoi du formulaire via Formspree === */
     const form = document.getElementById('contactForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Sécurité : bloque les balises HTML dans le message
+      // Vérifie que le message ne contient pas de balises HTML
       const message = document.getElementById('message').value;
       if (/[<>]/.test(message)) {
         alert("Merci de ne pas inclure de code HTML.");
         return;
       }
 
-      // ReCAPTCHA déclenche la validation avant envoi
-      grecaptcha.execute();
-    });
-
-    /* === 3. reCAPTCHA INVISIBLE (Custom Google key) === */
-    document.addEventListener('DOMContentLoaded', () => {
-      const button = document.querySelector('#contactForm button');
-      button.classList.add('g-recaptcha');
-      button.setAttribute('data-sitekey', '6LeA-AcsAAAAALU4HWc2wOUEGszDab6bTramc05C'); // ta clé publique Google
-      button.setAttribute('data-callback', 'onSubmit');
-      button.setAttribute('data-action', 'submit');
-    });
-
-    // Fonction exécutée quand Google valide le reCAPTCHA
-    function onSubmit(token) {
-      const form = document.getElementById('contactForm');
+      // Envoi vers Formspree
       const formData = new FormData(form);
-
-      fetch(form.action, {
+      const response = await fetch(form.action, {
         method: form.method,
         body: formData,
         headers: { 'Accept': 'application/json' }
-      }).then((response) => {
-        if (response.ok) {
-          alert('✅ Votre message a bien été envoyé, merci !');
-          form.reset();
-        } else {
-          alert('⚠️ Une erreur est survenue. Merci de réessayer plus tard.');
-        }
-      }).catch(() => {
-        alert('❌ Impossible de contacter le serveur. Vérifiez votre connexion.');
       });
-    }
+
+      if (response.ok) {
+        alert('✅ Votre message a bien été envoyé, merci !');
+        form.reset();
+      } else {
+        alert('⚠️ Une erreur est survenue. Merci de réessayer plus tard.');
+      }
+    });
   </script>
 </body>
 </html>
