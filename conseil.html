@@ -5,38 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conseil & Intégration IA | LA-CIA</title>
 
-  <!-- On réutilise ton style principal (Matrix + typographies globales) -->
+  <!-- Feuille de style principale -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Styles spécifiques à cette page -->
   <style>
-    /* Zone principale de contenu : fond sombre semi-transparent + effet de flou */
+    /* === Ajustements spécifiques à cette page === */
+
     main {
       max-width: 1000px;
-      margin: 40px auto;
-      padding: 30px;
+      margin: 60px auto;
+      padding: 40px 30px;
       background: rgba(0, 0, 0, 0.55);
       border-radius: 12px;
-      backdrop-filter: blur(4px);
-      animation: fadeIn 1.2s ease; /* effet d’apparition douce */
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1s ease;
+      text-align: left;
     }
 
-    /* Sous-titres et titres */
+    h1 {
+      color: #00FF41;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
     h2 {
       color: #00FF41;
-      margin-top: 40px;
+      margin-top: 50px;
+      margin-bottom: 20px;
     }
 
     h3 {
-      color: #FFD700;
+      color: #ffffff;
+      margin-top: 20px;
     }
 
-    /* Section générique */
-    .section {
-      margin-bottom: 40px;
+    ul {
+      margin-left: 25px;
+      line-height: 1.6;
     }
 
-    /* Grille pour les cartes */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -44,41 +51,44 @@
       margin-top: 20px;
     }
 
-    /* Bloc individuel de carte */
     .card {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
       padding: 20px;
       border-radius: 10px;
-      transition: background 0.3s;
+      box-shadow: 0 0 8px rgba(0, 255, 65, 0.15);
+      transition: transform 0.2s ease, background 0.3s ease;
     }
 
     .card:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-3px);
     }
 
-    /* Texte secondaire */
-    .note {
-      font-size: 0.9em;
-      color: #bbb;
+    p, li {
+      color: #e5e5e5;
     }
 
-    /* Animation d’apparition générale */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Lien de retour en haut de la page */
     .back {
       display: inline-block;
       color: #00FF41;
-      margin-bottom: 20px;
+      margin: 15px 0 25px 0;
       text-decoration: none;
       font-weight: bold;
     }
 
     .back:hover {
       text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      height: 60px;
+      display: block;
+      margin: 20px auto;
     }
   </style>
 </head>
@@ -87,24 +97,26 @@
   <!-- Fond Matrix animé -->
   <canvas id="matrix"></canvas>
 
-  <!-- En-tête : titre + lien retour -->
+  <!-- En-tête avec logo et lien retour -->
   <header>
+    <a href="index.html">
+      <img src="logo.png" alt="Logo LA-CIA" class="logo">
+    </a>
     <a href="index.html" class="back">← Retour au site</a>
-    <h1>Conseil & Intégration en Intelligence Artificielle</h1>
   </header>
 
   <!-- Contenu principal -->
   <main>
-    <!-- SECTION INTRO -->
-    <section class="section">
+    <h1>Conseil & Intégration en Intelligence Artificielle</h1>
+
+    <section>
       <p>
         Nous accompagnons les entreprises dans la mise en place d’outils d’IA simples, utiles et mesurables.<br>
         Objectif : <strong>gagner du temps, réduire les coûts et faire évoluer votre activité sans complexité technique.</strong>
       </p>
     </section>
 
-    <!-- SECTION DOMAINES D’INTERVENTION -->
-    <section class="section">
+    <section>
       <h2>Nos domaines d’intervention</h2>
       <div class="cards">
         <div class="card">
@@ -126,37 +138,27 @@
       </div>
     </section>
 
-    <!-- SECTION ACCOMPAGNEMENT (sans graphiques) -->
-    <section class="section">
+    <section>
       <h2>Nos accompagnements selon votre activité</h2>
 
-      <!-- Bloc artisans -->
       <h3>🔧 Artisans & indépendants</h3>
       <ul>
         <li>Automatisation des devis, factures et relances.</li>
         <li>Assistant IA pour répondre aux demandes simples des clients.</li>
         <li>Gestion simplifiée du planning et des rendez-vous.</li>
       </ul>
-      <p>
-        <em>Résultat : jusqu’à 3 heures de tâches administratives économisées par jour,  
-        et une communication client plus fluide.</em>
-      </p>
+      <p><em>Résultat : jusqu’à 3 heures de tâches administratives économisées par jour, et une communication client plus fluide.</em></p>
 
-      <!-- Bloc entreprises -->
       <h3>🏢 Entreprises de services / PME</h3>
       <ul>
         <li>Automatisation du suivi client et des rapports.</li>
         <li>Création de supports ou réponses commerciales avec l’IA.</li>
         <li>Outils sur mesure intégrés à vos processus internes.</li>
       </ul>
-      <p>
-        <em>Résultat : une réactivité accrue, une meilleure satisfaction client  
-        et des décisions plus rapides grâce à la centralisation intelligente des données.</em>
-      </p>
+      <p><em>Résultat : une réactivité accrue, une meilleure satisfaction client et des décisions plus rapides grâce à la centralisation intelligente des données.</em></p>
     </section>
 
-    <!-- SECTION POURQUOI NOUS CHOISIR -->
-    <section class="section">
+    <section>
       <h2>Pourquoi nous choisir ?</h2>
       <ul>
         <li><strong>Accompagnement humain :</strong> nous parlons le langage des entreprises, pas celui des ingénieurs.</li>
@@ -166,7 +168,7 @@
     </section>
   </main>
 
-  <!-- Script Matrix animé (identique à ton index) -->
+  <!-- Script Matrix (identique à ton index) -->
   <script>
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
