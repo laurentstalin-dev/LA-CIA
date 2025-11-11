@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales & politique de confidentialité | LA-CIA</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      max-width: 900px;
+      margin: 50px auto;
+      background: rgba(0,0,0,0.6);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: left;
+      line-height: 1.7;
+    }
+    h1, h2 {
+      color: #00e676;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    a {
+      color: #00b4d8;
+    }
+    footer {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="matrix"></canvas>
+
+  <main>
+    <h1>Mentions légales</h1>
+
+    <h2>Éditeur du site</h2>
+    <p><strong>LA-CIA</strong> – L’Alliance Conseil en Intelligence Artificielle<br>
+    Site édité par : <strong>Laurent Stalin</strong><br>
+    Pour toute question ou demande d’information, merci de passer par le
+    <a href="index.html#contact">formulaire de contact</a> du site.<br>
+    Nom de domaine : <a href="https://www.la-cia.fr">www.la-cia.fr</a><br>
+    Hébergement : <strong>GitHub Pages</strong> (GitHub, Inc. – 88 Colin P. Kelly Jr St, San Francisco, CA 94107, États-Unis)</p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>L’ensemble des éléments présents sur ce site (textes, images, graphismes, logo, code source) est la propriété exclusive de LA-CIA.  
+    Toute reproduction, distribution ou modification sans autorisation écrite préalable est strictement interdite.</p>
+
+    <h2>Responsabilité</h2>
+    <p>Les informations fournies sur ce site sont à titre informatif. LA-CIA ne saurait être tenue responsable d’une mauvaise utilisation des contenus ou des outils proposés.</p>
+
+    <h2>Politique de confidentialité</h2>
+    <p>Le site <strong>www.la-cia.fr</strong> ne collecte aucune donnée personnelle à des fins commerciales.  
+    Les données saisies via le <strong>formulaire de contact</strong> (nom, prénom, société, email, téléphone, message) sont utilisées uniquement pour répondre aux demandes des visiteurs.</p>
+    <p>Ces données ne sont ni vendues ni transmises à des tiers et sont supprimées automatiquement par <strong>Formspree</strong> après traitement.</p>
+
+    <h2>Cookies</h2>
+    <p>Ce site n’utilise pas de cookies de suivi ni de mesure d’audience.  
+    Seuls des cookies techniques temporaires peuvent être utilisés par l’hébergeur (GitHub Pages).</p>
+
+    <h2>Exercice de vos droits</h2>
+    <p>Conformément au RGPD (Règlement Général sur la Protection des Données), vous pouvez demander à consulter, corriger ou supprimer vos données personnelles.  
+    Pour cela, veuillez utiliser le <a href="index.html#contact">formulaire de contact</a>.</p>
+
+    <p style="text-align:center; margin-top:40px;">
+      <a href="index.html">← Retour au site</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2025 LA-CIA – Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    /* Réutilisation du fond Matrix */
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>|+-•◦○●';
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00FF41';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 40);
+  </script>
+</body>
+</html>
