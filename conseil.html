@@ -9,10 +9,15 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* === Ajustements spécifiques à cette page === */
+    /* === Ajustements globaux === */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #e6e6e6;
+    }
 
     main {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 60px auto;
       padding: 40px 30px;
       background: rgba(0, 0, 0, 0.55);
@@ -25,53 +30,49 @@
     h1 {
       color: #00FF41;
       text-align: center;
-      margin-bottom: 30px;
+      margin: 20px 0 40px 0;
     }
 
     h2 {
       color: #00FF41;
       margin-top: 50px;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     h3 {
       color: #ffffff;
-      margin-top: 20px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+
+    p, li {
+      color: #dcdcdc;
+      line-height: 1.6;
     }
 
     ul {
       margin-left: 25px;
-      line-height: 1.6;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
+    /* === Logo === */
+    .logo {
+      display: block;
+      height: auto;
+      width: 160px;
+      margin: 25px auto 10px auto;
+      transition: transform 0.3s ease;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0, 255, 65, 0.15);
-      transition: transform 0.2s ease, background 0.3s ease;
+    .logo:hover {
+      transform: scale(1.05);
     }
 
-    .card:hover {
-      background: rgba(255, 255, 255, 0.12);
-      transform: translateY(-3px);
-    }
-
-    p, li {
-      color: #e5e5e5;
-    }
-
+    /* === Lien de retour === */
     .back {
-      display: inline-block;
+      display: block;
       color: #00FF41;
-      margin: 15px 0 25px 0;
+      margin: 0 auto 30px auto;
+      text-align: center;
       text-decoration: none;
       font-weight: bold;
     }
@@ -80,15 +81,47 @@
       text-decoration: underline;
     }
 
+    /* === Cartes de domaines d’intervention === */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 65, 0.2);
+      box-shadow: 0 0 12px rgba(0, 255, 65, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(0, 255, 65, 0.08);
+      box-shadow: 0 0 16px rgba(0, 255, 65, 0.25);
+    }
+
+    .card-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: #00FF41;
+      display: block;
+      text-align: center;
+    }
+
+    .card h3 {
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    .logo {
-      height: 60px;
-      display: block;
-      margin: 20px auto;
     }
   </style>
 </head>
@@ -97,7 +130,7 @@
   <!-- Fond Matrix animé -->
   <canvas id="matrix"></canvas>
 
-  <!-- En-tête avec logo et lien retour -->
+  <!-- En-tête : logo + retour -->
   <header>
     <a href="index.html">
       <img src="logo.png" alt="Logo LA-CIA" class="logo">
@@ -105,10 +138,10 @@
     <a href="index.html" class="back">← Retour au site</a>
   </header>
 
-  <!-- Contenu principal -->
   <main>
     <h1>Conseil & Intégration en Intelligence Artificielle</h1>
 
+    <!-- Introduction -->
     <section>
       <p>
         Nous accompagnons les entreprises dans la mise en place d’outils d’IA simples, utiles et mesurables.<br>
@@ -116,28 +149,37 @@
       </p>
     </section>
 
+    <!-- Domaines d’intervention avec icônes -->
     <section>
       <h2>Nos domaines d’intervention</h2>
       <div class="cards">
         <div class="card">
+          <span class="card-icon">⚙️</span>
           <h3>Automatisation & gain de temps</h3>
-          <p>Réduction des tâches répétitives, agents intelligents, génération automatique de documents et réponses clients.</p>
+          <p>Automatisez les tâches répétitives et concentrez-vous sur la valeur ajoutée. 
+          L’IA s’occupe des relances, documents et réponses clients.</p>
         </div>
         <div class="card">
+          <span class="card-icon">📊</span>
           <h3>Aide à la décision</h3>
-          <p>Analyse de vos données, tableaux de bord et prévisions simples pour une prise de décision plus rapide.</p>
+          <p>Exploitez vos données simplement : analyse, prévisions et rapports visuels pour des décisions rapides et fiables.</p>
         </div>
         <div class="card">
+          <span class="card-icon">🔗</span>
           <h3>Intégration dans vos outils</h3>
-          <p>L’IA s’intègre à vos systèmes existants (CRM, messagerie, site web...) sans rien remplacer, pour un maximum d’efficacité.</p>
+          <p>Ajoutez l’IA à vos outils existants (CRM, messagerie, site web...) 
+          sans rien remplacer, pour un maximum d’efficacité et de fluidité.</p>
         </div>
         <div class="card">
+          <span class="card-icon">🛡️</span>
           <h3>Sécurité & confidentialité</h3>
-          <p>Vos données sont protégées, hébergées en France ou en Europe, dans le respect du RGPD.</p>
+          <p>Protection des données, hébergement local ou européen, 
+          conformité RGPD et confidentialité assurée.</p>
         </div>
       </div>
     </section>
 
+    <!-- Accompagnements -->
     <section>
       <h2>Nos accompagnements selon votre activité</h2>
 
@@ -158,6 +200,7 @@
       <p><em>Résultat : une réactivité accrue, une meilleure satisfaction client et des décisions plus rapides grâce à la centralisation intelligente des données.</em></p>
     </section>
 
+    <!-- Pourquoi nous choisir -->
     <section>
       <h2>Pourquoi nous choisir ?</h2>
       <ul>
@@ -168,7 +211,7 @@
     </section>
   </main>
 
-  <!-- Script Matrix (identique à ton index) -->
+  <!-- Script Matrix animé -->
   <script>
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
